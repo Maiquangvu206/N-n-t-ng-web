@@ -83,3 +83,101 @@
     Lỗi 10 — Dòng 47 — Thẻ <footer> chứa <p> nhưng không đóng </p> — Thêm </p> trước </footer>.
     Lỗi 11 — Dòng 2- end — Không có thuộc tính lang cho thẻ <html> — Thêm lang="vi" (hoặc en) vào <html>.
     Lỗi 12 — Toàn file — Indentation & cấu trúc thụt lề lộn xộn, làm giảm đọc hiểu — Canh lại indent và format file để readable.
+
+# Câu B4
+    1. 
+    2. 
+    3. action: giá trị "/tim-kiem"
+       method: Get
+       input type: "text" và "submit"
+
+
+# Câu C1
+    <article class="product-info"> <!-- article vì thông tin sản phẩm là một nội dung độc lập có thể chia sẻ/nhúng -->
+        <header> <!-- header nội bộ chứa tên và hành động nhanh (giá, nút mua) -->
+            <h1> <!-- Tên sản phẩm là heading chính trong vùng nội dung -->Tên sản phẩm</h1>
+            <p class="price"><strong>Giá</strong></p> <!-- strong để nhấn giá -->
+            <div class="rating" role="img" aria-label="Đánh giá: 4 trên 5 sao"><!-- dùng role/aria-label để mô tả rating cho assistive tech -->★★★★★</div>
+        </header>
+
+        <section class="short-description"> <!-- mô tả ngắn, section phù hợp cho 1 block nội dung -->
+            <p><!-- Mô tả ngắn/khuyến nghị --></p>
+        </section>
+
+        <section class="purchase-actions"> <!-- khu vực nút mua/gio hàng -->
+            <button type="button">Mua ngay</button>
+            <button type="button">Thêm vào giỏ</button>
+            <a href="#reviews">Xem đánh giá</a>
+        </section>
+
+        <section class="specs" aria-labelledby="specs-heading"> <!-- bảng thông số kỹ thuật -->
+            <h2 id="specs-heading">Thông số kỹ thuật</h2>
+            <table> <!-- table vì là dữ liệu có hàng/cột có cấu trúc -->
+                <thead>
+                    <tr>
+                        <th>Tiêu chí</th>
+                        <th>Thông số</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Màn hình</td>
+                        <td><!-- value --></td>
+                    </tr>
+                    <tr>
+                        <td>CPU</td>
+                        <td><!-- value --></td>
+                    </tr>
+                    <!-- thêm hàng thông số -->
+                </tbody>
+            </table>
+        </section>
+
+    </article>
+
+    <aside class="product-sidebar" aria-label="Sản phẩm tương tự"> <!-- aside vì nội dung phụ trợ cho trang chính -->
+        <h2>Sản phẩm tương tự</h2>
+        <ul>
+            <li>
+                <article> <!-- mỗi item có thể là một article ngắn đại diện sản phẩm --> 
+                    <h3></h3>
+                    <p></p>
+                </article>
+            </li>
+            <!-- thêm item tương tự -->
+        </ul>
+    </aside>
+
+    <section id="reviews" class="reviews" aria-labelledby="reviews-heading"> <!-- khu vực đánh giá/bình luận -->
+        <h2 id="reviews-heading">Đánh giá & Bình luận</h2>
+
+        <form class="review-form" aria-label="Gửi đánh giá"> <!-- form để gửi bình luận -->
+            <label for="rating">Đánh giá</label>
+            <select id="rating" name="rating">
+                <option>5</option>
+            </select>
+
+            <label for="comment">Bình luận</label>
+            <textarea id="comment" name="comment"></textarea>
+
+            <button type="submit">Gửi</button>
+        </form>
+
+        <section class="review-list" aria-live="polite"> <!-- danh sách đánh giá hiện có -->
+            <article class="review"> <!-- mỗi đánh giá là một article độc lập -->
+                <header>
+                    <h3><!-- Tên người đánh giá --></h3>
+                    <time datetime=""><!-- thời gian --></time>
+                </header>
+                <p><!-- nội dung đánh giá --></p>
+            </article>
+            <!-- thêm review -->
+        </section>
+    </section>
+
+# Câu C2
+    - Dùng div cho mọi thứ có vẻ nhanh nhưng về lâu dài gây hại cho SEO, accessibility và bảo trì. Về SEO: công cụ tìm kiếm dựa vào cấu trúc tài liệu (ví dụ header, nav, main, article, h1…) để hiểu đâu là nội dung chính, đâu là điều hướng — trang có cấu trúc semantic rõ ràng thường được lập chỉ mục chính xác hơn và có cơ hội hiển thị rich snippet (tiêu đề/giá/đánh giá) trên trang kết quả. Về Accessibility: trình đọc màn hình và các assistive technologies dùng landmark (ví dụ nav[aria-label], main, aside) để nhảy nhanh tới khu vực cần thiết; nếu toàn bộ đều là div, người dùng khiếm thị sẽ phải đọc tuần tự toàn bộ DOM, trải nghiệm kém hơn nhiều.
+
+    - Ví dụ cụ thể: một trang chi tiết sản phẩm có <main><article><h1>...</h1><p class="price"><strong>...</strong></p></article></main> cho phép bot lấy đúng h1 làm tiêu đề sản phẩm và screen reader nhảy tới main rồi article — giúp người dùng tiếp cận tên/giá nhanh, và search engine có thể trích giá/đánh giá làm snippet nếu thêm microdata.
+
+    - Tuy nhiên, không phải lúc nào cũng cần thẻ semantic mới: div hợp lý cho container thuần layout (grid wrapper, flex container) hoặc khi một vùng chỉ dùng để tạo lưới/spacing mà không mang ý nghĩa nội dung. Kết luận: học semantic không tốn vô ích — nó tăng tính truy cập, khả năng SEO và dễ bảo trì; còn div nên dùng cho mục đích bố cục thuần túy.
