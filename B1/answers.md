@@ -3,15 +3,14 @@
 
 ## a. Ý 1
 
-1. **DNS Lookup**: Trình duyệt hỏi nhà cung cấp DNS để tìm địa chỉ IP của `shopee.vn` (giống như tra cứu số điện thoại từ danh bạ).
-
-2. **Gửi HTTP Request**: Trình duyệt (client) gửi yêu cầu tới máy chủ để lấy trang chủ.
-
-3. **Server xử lý**: Máy chủ tiếp nhận yêu cầu, truy vấn cơ sở dữ liệu và chuẩn bị nội dung trả về.
-
-4. **Trả về HTTP Response**: Server gửi lại các file HTML, CSS, JS và/hoặc dữ liệu API.
-
-5. **Browser Rendering**: Trình duyệt nhận tài nguyên và kết xuất giao diện (render) cho người dùng.
+    1. DNS lookup: trình duyệt/OS kiểm tra cache → hỏi DNS resolver → nhận địa chỉ IP (có thể là IP của CDN edge).
+    2. TCP 3-way handshake: client và server (hoặc CDN) thiết lập kết nối TCP (SYN, SYN-ACK, ACK).
+    3. TLS handshake: thiết lập phiên bảo mật HTTPS, xác thực chứng chỉ, sinh khóa phiên.
+    4. HTTP request: trình duyệt gửi HTTP GET (ví dụ GET /) qua kết nối đã mã hóa đến server/CDN.
+    5. Server xử lý và trả về HTTP response (200 OK) chứa HTML (có thể kèm redirect).
+    6. Browser nhận HTML → bắt đầu parse, xây dựng DOM tree; khi gặp resource (CSS/JS/img) sẽ gửi thêm các request song song.
+    7. Parse CSS → xây dựng CSSOM; thực thi JavaScript (JS có thể thay đổi DOM/CSS và/hoặc chặn render).
+    8. Tạo render tree → layout (reflow) để tính toán kích thước/vị trí → paint và composite → hiển thị nội dung lên màn hình.
 
 ## b. Ý 2
 
